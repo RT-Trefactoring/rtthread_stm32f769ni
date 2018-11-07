@@ -1,0 +1,24 @@
+env
+.vscode
+*.bin
+*.axf
+*.elf
+*.hex
+*.map
+build
+.config.*
+.config *
+*.uvguix.*
+*.pyc
+.DS_Store
+clean
+.sconsign.dblite
+settings
+DebugConfig
+JLinkSettings.ini
+*.dfu
+cconfig.h
+*.scvd
+*.rbl
+.vs
+*.dbsqlite

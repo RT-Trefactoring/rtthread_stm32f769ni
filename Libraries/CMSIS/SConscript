@@ -1,0 +1,28 @@
+# RT-Thread building script for component
+import rtconfig
+Import('RTT_ROOT')
+from building import *
+
+cwd = GetCurrentDir()
+src = Split('''
+Device/ST/STM32F7xx/Source/Templates/system_stm32f7xx.c
+''')
+CPPPATH = [cwd + '/Device/ST/STM32F7xx/Include', cwd + '/Include']
+
+STM32_TYPE = 'STM32F769xx'
+    
+CPPDEFINES = ['STM32F769xx']
+
+# add for startup script 
+if rtconfig.CROSS_TOOL == 'gcc':
+     folder = 'gcc'
+elif rtconfig.CROSS_TOOL == 'keil':
+     folder = 'arm'
+elif rtconfig.CROSS_TOOL == 'iar':
+     folder = 'iar'
+ 
+src += ['Device/ST/STM32F7xx/Source/Templates/' + folder + '/startup_' + STM32_TYPE.lower() + '.s']
+
+group = DefineGroup('CMSIS', src, depend = [''], CPPPATH = CPPPATH, CPPDEFINES = CPPDEFINES)
+
+Return('group')

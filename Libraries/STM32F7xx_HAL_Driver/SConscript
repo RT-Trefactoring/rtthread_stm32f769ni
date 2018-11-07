@@ -1,0 +1,30 @@
+import rtconfig
+Import('RTT_ROOT')
+from building import *
+
+# get current directory
+cwd = GetCurrentDir()
+
+# The set of source files associated with this SConscript file.
+import rtconfig
+
+src = [] # Glob('Src/*.c')
+
+path = [cwd + '/Inc']
+
+LIBS = []
+LIBPATH = [cwd]
+
+if rtconfig.CROSS_TOOL == 'gcc':
+    LIBS = ['STM32F7xx_HAL_Driver_gcc']
+elif rtconfig.CROSS_TOOL == 'keil':
+    LIBS = ['STM32F7xx_HAL_Driver_rvds']
+else:
+    print('Not support iar')
+    exit(-1)
+
+CPPDEFINES = ['USE_HAL_DRIVER']
+group = DefineGroup('STM32F7xx_HAL_Driver', src, depend = [''], CPPPATH = path, CPPDEFINES = CPPDEFINES, LIBS = LIBS, LIBPATH = LIBPATH)
+
+Return('group')
+
